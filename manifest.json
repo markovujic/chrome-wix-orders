@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Wix Orders Exporter",
+  "version": "1.0",
+  "description": "Export Wix orders to Excel",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.wix.com/*"
+  ],
+  "action": {
+    "default_popup": "index.html"
+  }
+}
