@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdLanguage } from 'react-icons/md'
-import { fetchOrders, exportToExcel, loginWithWix } from './utils'
+import { fetchOrders, fetchProducts, exportToExcel, loginWithWix } from './utils'
 import './i18n'
 import './App.css'
 
@@ -79,7 +79,8 @@ function App() {
       setSuccessMessage('')
       
       // Dohvaćanje narudžbi
-      const orders = await fetchOrders(credentials)
+      // change when PROD
+      const orders = await fetchProducts(credentials)
       
       // Sortiranje narudžbi po imenu kupca
       const sortedOrders = orders.sort((a, b) => 

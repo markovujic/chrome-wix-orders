@@ -10,8 +10,9 @@ export async function fetchOrders(credentials) {
     // Postavljanje zaglavlja ovisno o načinu autentifikacije
     if (credentials.type === 'api') {
       headers = {
-        'Authorization': credentials.apiKey,
-        'wix-site-id': credentials.siteId
+        'Authorization': `Bearer ${credentials.apiKey}`,
+        'wix-site-id': credentials.siteId,
+        'Content-Type': 'application/json'
       }
     } else {
       // Korištenje session cookie-ja za autentifikaciju
@@ -19,15 +20,55 @@ export async function fetchOrders(credentials) {
         'Cookie': credentials.sessionCookie
       }
     }
+
+    const requestBody = {
+      "query": {}
+    };
     
     // Slanje GET zahtjeva na Wix API endpoint za narudžbe
-    const response = await axios.get(`https://www.wixapis.com/stores/v1/orders`, {
-      headers
-    })
+    const response = await axios.post(
+      `https://www.wixapis.com/stores/v1/orders`, 
+      requestBody, 
+      { headers })
 
     return response.data.orders
   } catch (error) {
     throw new Error('Failed to fetch orders from Wix')
+  }
+}
+
+// TEST
+export async function fetchProducts(credentials) {
+  try {
+    let headers = {}
+    
+    // Postavljanje zaglavlja ovisno o načinu autentifikacije
+    if (credentials.type === 'api') {
+      headers = {
+        'Authorization': `Bearer ${credentials.apiKey}`,
+        'wix-site-id': credentials.siteId,
+        'Content-Type': 'application/json'
+      }
+    } else {
+      // Korištenje session cookie-ja za autentifikaciju
+      headers = {
+        'Cookie': credentials.sessionCookie
+      }
+    }
+
+    const requestBody = {
+      "query": {}
+    };
+    
+    // Slanje GET zahtjeva na Wix API endpoint za narudžbe
+    const response = await axios.post(
+      `https://www.wixapis.com/stores/v1/products/query`, 
+      requestBody, 
+      { headers })
+
+    return response.data.products
+  } catch (error) {
+    throw new Error('Failed to fetch products from Wix')
   }
 }
 
